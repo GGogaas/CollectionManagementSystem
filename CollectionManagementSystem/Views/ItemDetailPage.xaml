@@ -128,7 +128,7 @@
                         Style="{StaticResource SecondaryButton}"/>
             </Grid>
 
-            <!-- Delete — only visible when editing an existing item -->
+            
             <Button Text="Delete Item"
                     Command="{Binding DeleteItemCommand}"
                     Style="{StaticResource DangerButton}"
