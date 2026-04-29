@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:CollectionManagementSystem.ViewModels"
+    xmlns:models="clr-namespace:CollectionManagementSystem.Models"
+    x:Class="CollectionManagementSystem.MainPage"
+    x:DataType="vm:MainViewModel"
+    Title="Collection Manager"
+    BackgroundColor="{StaticResource AppBackground}">
+
+    <Grid RowDefinitions="Auto,*,Auto">
+
+        
+        <Border Grid.Row="0"
+                BackgroundColor="{StaticResource AppPrimary}"
+                StrokeThickness="0"
+                Padding="20,18,20,18">
+            <StackLayout Spacing="2">
+                <Label Text="My Collections"
+                       TextColor="White"
+                       FontSize="24"
+                       FontAttributes="Bold"/>
+                <Label Text="Manage your personal collections"
+                       TextColor="#DBEAFE"
+                       FontSize="13"/>
+            </StackLayout>
+        </Border>
+
+        
+        <CollectionView Grid.Row="1"
+                        ItemsSource="{Binding Collections}"
+                        Margin="12,8,12,8">
+            <CollectionView.EmptyView>
+                <VerticalStackLayout HorizontalOptions="Center"
+                                     VerticalOptions="Center"
+                                     Spacing="8"
+                                     Margin="0,60,0,0">
+                    <Label Text="No collections yet"
+                           TextColor="{StaticResource AppText}"
+                           FontSize="18"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"/>
+                    <Label Text="Tap 'New Collection' to get started"
+                           TextColor="{StaticResource AppTextSecondary}"
+                           FontSize="14"
+                           HorizontalOptions="Center"/>
+                </VerticalStackLayout>
+            </CollectionView.EmptyView>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:Collection">
+                    <SwipeView Margin="0,4">
+                        <SwipeView.RightItems>
+                            <SwipeItems Mode="Execute">
+                                <SwipeItem Text="Delete"
+                                           BackgroundColor="{StaticResource AppDanger}"
+                                           Invoked="OnDeleteSwipeInvoked"/>
+                            </SwipeItems>
+                        </SwipeView.RightItems>
+                        <Border Style="{StaticResource AppCard}">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnCollectionTapped"/>
+                            </Border.GestureRecognizers>
+                            <Grid ColumnDefinitions="*,Auto">
+                                <VerticalStackLayout Grid.Column="0" Spacing="6">
+                                    <Label Text="{Binding Name}"
+                                           FontSize="18"
+                                           FontAttributes="Bold"
+                                           TextColor="{StaticResource AppText}"/>
+                                    <Border BackgroundColor="{StaticResource AppPrimaryLight}"
+                                            StrokeThickness="0"
+                                            StrokeShape="RoundRectangle 6"
+                                            Padding="8,3"
+                                            HorizontalOptions="Start">
+                                        <Label Text="{Binding CollectionType}"
+                                               TextColor="{StaticResource AppPrimary}"
+                                               FontSize="11"
+                                               FontAttributes="Bold"/>
+                                    </Border>
+                                    <Label TextColor="{StaticResource AppTextSecondary}"
+                                           FontSize="13">
+                                        <Label.Text>
+                                            <MultiBinding StringFormat="{}{0} items">
+                                                <Binding Path="Items.Count"/>
+                                            </MultiBinding>
+                                        </Label.Text>
+                                    </Label>
+                                </VerticalStackLayout>
+                                <VerticalStackLayout Grid.Column="1"
+                                                     VerticalOptions="Center"
+                                                     Spacing="0"
+                                                     Margin="8,0,0,0">
+                                    <Button Text="✕"
+                                            Clicked="OnDeleteButtonClicked"
+                                            BackgroundColor="Transparent"
+                                            TextColor="{StaticResource AppDanger}"
+                                            FontSize="16"
+                                            Padding="8,4"
+                                            WidthRequest="40"/>
+                                    <Label Text="›"
+                                           FontSize="28"
+                                           TextColor="{StaticResource AppTextSecondary}"
+                                           HorizontalOptions="Center"/>
+                                </VerticalStackLayout>
+                            </Grid>
+                        </Border>
+                    </SwipeView>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        
+        <Button Grid.Row="2"
+                Text="+ New Collection"
+                Command="{Binding AddCollectionCommand}"
+                Style="{StaticResource PrimaryButton}"
+                CornerRadius="0"
+                FontSize="16"
+                Padding="16,18"
+                Margin="0"/>
+    </Grid>
+</ContentPage>

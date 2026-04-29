@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:CollectionManagementSystem.ViewModels"
+    x:Class="CollectionManagementSystem.Views.CollectionSummaryPage"
+    x:DataType="vm:CollectionSummaryViewModel"
+    Title="Collection Summary"
+    BackgroundColor="{StaticResource AppBackground}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="16">
+
+            
+            <Border Style="{StaticResource AppCard}" BackgroundColor="{StaticResource AppPrimary}" StrokeThickness="0">
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="{Binding CollectionName}"
+                           TextColor="White"
+                           FontSize="22"
+                           FontAttributes="Bold"/>
+                    <Border BackgroundColor="#3B82F6"
+                            StrokeThickness="0"
+                            StrokeShape="RoundRectangle 6"
+                            Padding="8,4"
+                            HorizontalOptions="Start">
+                        <Label Text="{Binding CollectionType}"
+                               TextColor="White"
+                               FontSize="12"
+                               FontAttributes="Bold"/>
+                    </Border>
+                </VerticalStackLayout>
+            </Border>
+
+            
+            <Label Text="OVERVIEW"
+                   TextColor="{StaticResource AppTextSecondary}"
+                   FontSize="12"
+                   FontAttributes="Bold"
+                   Margin="4,0,0,0"/>
+
+            <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto" ColumnSpacing="12" RowSpacing="12">
+
+                
+                <Border Grid.Row="0" Grid.Column="0"
+                        StrokeShape="RoundRectangle 12"
+                        StrokeThickness="0"
+                        BackgroundColor="{StaticResource AppPrimaryLight}"
+                        Padding="16">
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="{Binding TotalItems}"
+                               TextColor="{StaticResource AppPrimary}"
+                               FontSize="32"
+                               FontAttributes="Bold"/>
+                        <Label Text="Total Items"
+                               TextColor="{StaticResource AppPrimary}"
+                               FontSize="13"/>
+                    </VerticalStackLayout>
+                </Border>
+
+                
+                <Border Grid.Row="0" Grid.Column="1"
+                        StrokeShape="RoundRectangle 12"
+                        StrokeThickness="0"
+                        BackgroundColor="{StaticResource AppSuccessLight}"
+                        Padding="16">
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="{Binding OwnedItems}"
+                               TextColor="{StaticResource AppSuccess}"
+                               FontSize="32"
+                               FontAttributes="Bold"/>
+                        <Label Text="Owned (New/Used)"
+                               TextColor="{StaticResource AppSuccess}"
+                               FontSize="13"/>
+                    </VerticalStackLayout>
+                </Border>
+
+               
+                <Border Grid.Row="1" Grid.Column="0"
+                        StrokeShape="RoundRectangle 12"
+                        StrokeThickness="0"
+                        BackgroundColor="{StaticResource Gray200}"
+                        Padding="16">
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="{Binding SoldItems}"
+                               TextColor="{StaticResource Gray600}"
+                               FontSize="32"
+                               FontAttributes="Bold"/>
+                        <Label Text="Sold"
+                               TextColor="{StaticResource Gray600}"
+                               FontSize="13"/>
+                    </VerticalStackLayout>
+                </Border>
+
+               
+                <Border Grid.Row="1" Grid.Column="1"
+                        StrokeShape="RoundRectangle 12"
+                        StrokeThickness="0"
+                        BackgroundColor="{StaticResource AppAccentLight}"
+                        Padding="16">
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="{Binding ForSaleItems}"
+                               TextColor="{StaticResource AppAccentDark}"
+                               FontSize="32"
+                               FontAttributes="Bold"/>
+                        <Label Text="For Sale"
+                               TextColor="{StaticResource AppAccentDark}"
+                               FontSize="13"/>
+                    </VerticalStackLayout>
+                </Border>
+
+               
+                <Border Grid.Row="2" Grid.Column="0"
+                        StrokeShape="RoundRectangle 12"
+                        StrokeThickness="0"
+                        BackgroundColor="{StaticResource AppPurpleLight}"
+                        Padding="16">
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="{Binding WantToBuyItems}"
+                               TextColor="{StaticResource AppPurple}"
+                               FontSize="32"
+                               FontAttributes="Bold"/>
+                        <Label Text="Want to Buy"
+                               TextColor="{StaticResource AppPurple}"
+                               FontSize="13"/>
+                    </VerticalStackLayout>
+                </Border>
+
+                
+                <Border Grid.Row="2" Grid.Column="1"
+                        StrokeShape="RoundRectangle 12"
+                        StrokeThickness="0"
+                        BackgroundColor="{StaticResource AppDangerLight}"
+                        Padding="16">
+                    <VerticalStackLayout Spacing="4">
+                        <Label FontSize="24"
+                               FontAttributes="Bold"
+                               TextColor="{StaticResource AppDanger}">
+                            <Label.Text>
+                                <MultiBinding StringFormat="${0:F2}">
+                                    <Binding Path="TotalValue"/>
+                                </MultiBinding>
+                            </Label.Text>
+                        </Label>
+                        <Label Text="Collection Value"
+                               TextColor="{StaticResource AppDanger}"
+                               FontSize="13"/>
+                    </VerticalStackLayout>
+                </Border>
+            </Grid>
+
+            
+            <Border Style="{StaticResource AppCard}">
+                <Grid ColumnDefinitions="*,Auto">
+                    <VerticalStackLayout Spacing="2">
+                        <Label Text="Average Rating"
+                               TextColor="{StaticResource AppTextSecondary}"
+                               FontSize="13"/>
+                        <Label Text="{Binding AverageRating}"
+                               TextColor="{StaticResource AppText}"
+                               FontSize="28"
+                               FontAttributes="Bold"/>
+                    </VerticalStackLayout>
+                    <Label Grid.Column="1"
+                           Text="★"
+                           FontSize="40"
+                           TextColor="{StaticResource AppAccent}"
+                           VerticalOptions="Center"/>
+                </Grid>
+            </Border>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

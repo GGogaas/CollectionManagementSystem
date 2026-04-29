@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:CollectionManagementSystem.ViewModels"
+    xmlns:presentation="clr-namespace:CollectionManagementSystem.Presentation"
+    x:Class="CollectionManagementSystem.Views.CollectionPage"
+    x:DataType="vm:CollectionViewModel"
+    BackgroundColor="{StaticResource AppBackground}">
+
+    <Shell.TitleView>
+        <StackLayout Orientation="Horizontal" Spacing="10" VerticalOptions="Center">
+            <Label Text="{Binding Title}"
+                   TextColor="White"
+                   FontSize="18"
+                   FontAttributes="Bold"
+                   VerticalOptions="Center"/>
+            <Border BackgroundColor="#3B82F6"
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 6"
+                    Padding="8,3"
+                    VerticalOptions="Center">
+                <Label Text="{Binding Subtitle}"
+                       TextColor="White"
+                       FontSize="11"
+                       FontAttributes="Bold"/>
+            </Border>
+        </StackLayout>
+    </Shell.TitleView>
+
+    <Grid RowDefinitions="Auto,Auto,*">
+
+        
+        <ScrollView Grid.Row="0" Orientation="Horizontal" HorizontalScrollBarVisibility="Never" Padding="12,10,12,6">
+            <HorizontalStackLayout Spacing="8">
+                <Button Text="Summary"
+                        Command="{Binding SummaryCommand}"
+                        Style="{StaticResource ToolbarButton}"/>
+                <Button Text="Add Column"
+                        Command="{Binding AddCustomFieldCommand}"
+                        Style="{StaticResource ToolbarButton}"/>
+                <Button Text="Export"
+                        Command="{Binding ExportCommand}"
+                        Style="{StaticResource ToolbarButton}"/>
+                <Button Text="Import"
+                        Command="{Binding ImportCommand}"
+                        Style="{StaticResource ToolbarButton}"/>
+            </HorizontalStackLayout>
+        </ScrollView>
+
+        
+        <Button Grid.Row="1"
+                Text="+ Add Item"
+                Command="{Binding AddItemCommand}"
+                Style="{StaticResource AccentButton}"
+                Margin="12,0,12,8"
+                HorizontalOptions="Start"/>
+
+        
+        <CollectionView Grid.Row="2"
+                        ItemsSource="{Binding Items}"
+                        Margin="12,0,12,12">
+            <CollectionView.EmptyView>
+                <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="6" Margin="0,40,0,0">
+                    <Label Text="No items yet"
+                           TextColor="{StaticResource AppTextSecondary}"
+                           FontSize="16"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"/>
+                    <Label Text="Tap '+ Add Item' to add your first item"
+                           TextColor="{StaticResource AppTextSecondary}"
+                           FontSize="13"
+                           HorizontalOptions="Center"/>
+                </VerticalStackLayout>
+            </CollectionView.EmptyView>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="presentation:CollectionItemDisplay">
+                    <SwipeView Margin="0,4" Opacity="{Binding Opacity}">
+                        <SwipeView.RightItems>
+                            <SwipeItems Mode="Reveal">
+                                <SwipeItem Text="Edit"
+                                           BackgroundColor="{StaticResource AppPrimary}"
+                                           Invoked="OnEditSwipeInvoked"/>
+                                <SwipeItem Text="Delete"
+                                           BackgroundColor="{StaticResource AppDanger}"
+                                           Invoked="OnDeleteItemSwipeInvoked"/>
+                            </SwipeItems>
+                        </SwipeView.RightItems>
+                        <Border Style="{StaticResource AppCard}" Padding="14">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnItemTapped"/>
+                            </Border.GestureRecognizers>
+                            <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto" ColumnSpacing="12">
+
+                               
+                                <Border Grid.Column="0"
+                                        WidthRequest="56"
+                                        HeightRequest="56"
+                                        StrokeThickness="0"
+                                        StrokeShape="RoundRectangle 8"
+                                        BackgroundColor="{StaticResource AppBackground}"
+                                        IsVisible="{Binding HasImage}">
+                                    <Image Source="{Binding ImageSource}"
+                                           Aspect="AspectFill"/>
+                                </Border>
+                                <Border Grid.Column="0"
+                                        WidthRequest="56"
+                                        HeightRequest="56"
+                                        StrokeThickness="0"
+                                        StrokeShape="RoundRectangle 8"
+                                        BackgroundColor="{StaticResource AppBackground}"
+                                        IsVisible="{Binding HasImage, Converter={StaticResource InvertBool}}">
+                                    <Label Text="?"
+                                           FontSize="22"
+                                           TextColor="{StaticResource AppTextSecondary}"
+                                           HorizontalOptions="Center"
+                                           VerticalOptions="Center"/>
+                                </Border>
+
+                                
+                                <VerticalStackLayout Grid.Column="1" Spacing="4">
+                                   
+                                    <Grid ColumnDefinitions="*,Auto">
+                                        <Label Text="{Binding Name}"
+                                               FontSize="16"
+                                               FontAttributes="Bold"
+                                               TextColor="{StaticResource AppText}"
+                                               LineBreakMode="TailTruncation"/>
+                                        <Border Grid.Column="1"
+                                                BackgroundColor="{Binding StatusColor}"
+                                                StrokeThickness="0"
+                                                StrokeShape="RoundRectangle 10"
+                                                Padding="8,3"
+                                                VerticalOptions="Center"
+                                                Margin="6,0,0,0">
+                                            <Label Text="{Binding StatusText}"
+                                                   TextColor="White"
+                                                   FontSize="11"
+                                                   FontAttributes="Bold"/>
+                                        </Border>
+                                    </Grid>
+
+                                    
+                                    <Grid ColumnDefinitions="Auto,*,Auto">
+                                        <Label Grid.Column="0"
+                                               Text="{Binding PriceText}"
+                                               FontSize="14"
+                                               FontAttributes="Bold"
+                                               TextColor="{StaticResource AppAccentDark}"/>
+                                        <Label Grid.Column="2"
+                                               Text="{Binding RatingDisplay}"
+                                               FontSize="13"
+                                               TextColor="{StaticResource AppTextSecondary}"/>
+                                    </Grid>
+
+                                    
+                                    <Label Text="{Binding Comment}"
+                                           FontSize="13"
+                                           TextColor="{StaticResource AppTextSecondary}"
+                                           LineBreakMode="TailTruncation"
+                                           MaxLines="2"
+                                           IsVisible="{Binding HasComment}"/>
+
+                                    
+                                    <Label Text="{Binding CustomFieldsDisplay}"
+                                           FontSize="12"
+                                           TextColor="{StaticResource AppTextSecondary}"
+                                           LineBreakMode="TailTruncation"
+                                           IsVisible="{Binding HasCustomFields}"/>
+                                </VerticalStackLayout>
+                            </Grid>
+                        </Border>
+                    </SwipeView>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>

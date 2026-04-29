@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:CollectionManagementSystem.ViewModels"
+    x:Class="CollectionManagementSystem.Views.AddCollectionPage"
+    x:DataType="vm:AddCollectionViewModel"
+    Title="New Collection"
+    BackgroundColor="{StaticResource AppBackground}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="16">
+
+           
+            <Border Style="{StaticResource AppCard}" BackgroundColor="{StaticResource AppPrimary}" StrokeThickness="0">
+                <VerticalStackLayout Spacing="4">
+                    <Label Text="Create Collection"
+                           TextColor="White"
+                           FontSize="20"
+                           FontAttributes="Bold"/>
+                    <Label Text="Give your collection a name and type"
+                           TextColor="#DBEAFE"
+                           FontSize="13"/>
+                </VerticalStackLayout>
+            </Border>
+
+            
+            <VerticalStackLayout Spacing="4">
+                <Label Text="COLLECTION NAME *" Style="{StaticResource FieldLabel}"/>
+                <Border Style="{StaticResource AppEntryBorder}">
+                    <Entry Text="{Binding Name}"
+                           Placeholder="e.g. My Book Collection"
+                           PlaceholderColor="{StaticResource AppTextSecondary}"
+                           TextColor="{StaticResource AppText}"
+                           FontSize="15"/>
+                </Border>
+            </VerticalStackLayout>
+
+            
+            <VerticalStackLayout Spacing="4">
+                <Label Text="COLLECTION TYPE" Style="{StaticResource FieldLabel}"/>
+                <Border Style="{StaticResource AppEntryBorder}">
+                    <Picker Title="Select type"
+                            ItemsSource="{Binding CollectionTypes}"
+                            SelectedItem="{Binding SelectedType}"
+                            TextColor="{StaticResource AppText}"
+                            FontSize="15"/>
+                </Border>
+            </VerticalStackLayout>
+
+            
+            <VerticalStackLayout Spacing="4">
+                <Label Text="DESCRIPTION (OPTIONAL)" Style="{StaticResource FieldLabel}"/>
+                <Border Style="{StaticResource AppEntryBorder}" Padding="12,8">
+                    <Editor Text="{Binding Description}"
+                            Placeholder="Brief description of this collection..."
+                            PlaceholderColor="{StaticResource AppTextSecondary}"
+                            TextColor="{StaticResource AppText}"
+                            FontSize="15"
+                            MinimumHeightRequest="80"
+                            AutoSize="TextChanges"/>
+                </Border>
+            </VerticalStackLayout>
+
+            
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="12" Margin="0,8,0,24">
+                <Button Grid.Column="0"
+                        Text="Create"
+                        Command="{Binding SaveCommand}"
+                        Style="{StaticResource PrimaryButton}"/>
+                <Button Grid.Column="1"
+                        Text="Cancel"
+                        Command="{Binding CancelCommand}"
+                        Style="{StaticResource SecondaryButton}"/>
+            </Grid>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

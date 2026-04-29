@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:CollectionManagementSystem.ViewModels"
+    x:Class="CollectionManagementSystem.Views.ItemDetailPage"
+    x:DataType="vm:ItemDetailViewModel"
+    Title="{Binding PageTitle}"
+    BackgroundColor="{StaticResource AppBackground}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="16">
+
+            
+            <VerticalStackLayout Spacing="4">
+                <Label Text="NAME *" Style="{StaticResource FieldLabel}"/>
+                <Border Style="{StaticResource AppEntryBorder}">
+                    <Entry Text="{Binding Name}"
+                           Placeholder="Item name"
+                           PlaceholderColor="{StaticResource AppTextSecondary}"
+                           TextColor="{StaticResource AppText}"
+                           FontSize="15"/>
+                </Border>
+            </VerticalStackLayout>
+
+            
+            <VerticalStackLayout Spacing="4">
+                <Label Text="PRICE ($)" Style="{StaticResource FieldLabel}"/>
+                <Border Style="{StaticResource AppEntryBorder}">
+                    <Entry Text="{Binding PriceText}"
+                           Placeholder="0.00"
+                           PlaceholderColor="{StaticResource AppTextSecondary}"
+                           TextColor="{StaticResource AppText}"
+                           Keyboard="Numeric"
+                           FontSize="15"/>
+                </Border>
+            </VerticalStackLayout>
+
+            
+            <VerticalStackLayout Spacing="4">
+                <Label Text="STATUS" Style="{StaticResource FieldLabel}"/>
+                <Border Style="{StaticResource AppEntryBorder}">
+                    <Picker Title="Select status"
+                            ItemsSource="{Binding StatusOptions}"
+                            SelectedIndex="{Binding StatusIndex}"
+                            TextColor="{StaticResource AppText}"
+                            FontSize="15"/>
+                </Border>
+            </VerticalStackLayout>
+
+            
+            <VerticalStackLayout Spacing="4">
+                <Grid ColumnDefinitions="*,Auto">
+                    <Label Text="RATING" Style="{StaticResource FieldLabel}"/>
+                    <Label Grid.Column="1"
+                           FontSize="14"
+                           FontAttributes="Bold"
+                           TextColor="{StaticResource AppPrimary}">
+                        <Label.Text>
+                            <MultiBinding StringFormat="{}{0}/10">
+                                <Binding Path="Rating"/>
+                            </MultiBinding>
+                        </Label.Text>
+                    </Label>
+                </Grid>
+                <Slider Minimum="1"
+                        Maximum="10"
+                        Value="{Binding Rating}"
+                        MinimumTrackColor="{StaticResource AppPrimary}"
+                        MaximumTrackColor="{StaticResource AppBorder}"
+                        ThumbColor="{StaticResource AppPrimary}"/>
+            </VerticalStackLayout>
+
+            
+            <VerticalStackLayout Spacing="4">
+                <Label Text="COMMENT" Style="{StaticResource FieldLabel}"/>
+                <Border Style="{StaticResource AppEntryBorder}" Padding="12,8">
+                    <Editor Text="{Binding Comment}"
+                            Placeholder="Notes, thoughts..."
+                            PlaceholderColor="{StaticResource AppTextSecondary}"
+                            TextColor="{StaticResource AppText}"
+                            FontSize="15"
+                            MinimumHeightRequest="80"
+                            AutoSize="TextChanges"/>
+                </Border>
+            </VerticalStackLayout>
+
+            
+            <VerticalStackLayout Spacing="8">
+                <Label Text="IMAGE" Style="{StaticResource FieldLabel}"/>
+                <Border Style="{StaticResource AppCard}" Padding="12">
+                    <VerticalStackLayout Spacing="10">
+                       
+                        <Image Source="{Binding ItemImageSource}"
+                               HeightRequest="160"
+                               Aspect="AspectFit"
+                               HorizontalOptions="Center"
+                               IsVisible="{Binding HasImage}"/>
+                        <HorizontalStackLayout Spacing="8">
+                            <Button Text="Pick Image"
+                                    Command="{Binding PickImageCommand}"
+                                    Style="{StaticResource SecondaryButton}"
+                                    HorizontalOptions="Start"/>
+                            <Button Text="Remove"
+                                    Command="{Binding RemoveImageCommand}"
+                                    Style="{StaticResource DangerButton}"
+                                    IsVisible="{Binding HasImage}"
+                                    HorizontalOptions="Start"/>
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+
+            
+            <VerticalStackLayout x:Name="CustomFieldsContainer" Spacing="12">
+               
+            </VerticalStackLayout>
+
+            
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="12" Margin="0,8,0,0">
+                <Button Grid.Column="0"
+                        Text="Save"
+                        Command="{Binding SaveCommand}"
+                        Style="{StaticResource PrimaryButton}"/>
+                <Button Grid.Column="1"
+                        Text="Cancel"
+                        Command="{Binding CancelCommand}"
+                        Style="{StaticResource SecondaryButton}"/>
+            </Grid>
+
+            <!-- Delete — only visible when editing an existing item -->
+            <Button Text="Delete Item"
+                    Command="{Binding DeleteItemCommand}"
+                    Style="{StaticResource DangerButton}"
+                    IsVisible="{Binding IsExistingItem}"
+                    Margin="0,4,0,24"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
